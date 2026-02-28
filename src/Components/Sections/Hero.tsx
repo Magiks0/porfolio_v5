@@ -4,7 +4,6 @@ export default function Hero() {
   return (
     <section className="flex items-center justify-center min-h-screen px-5 py-16 overflow-hidden">
       <div className="flex flex-col-reverse items-center w-full max-w-300 gap-16 lg:flex-row ">
-        {/* LEFT COLUMN */}
         <div className="flex flex-col gap-6 lg:items-start items-center text-center lg:text-left w-1/2">
           <h1 className="text-[clamp(2.5rem,5vw,3.5rem)] font-semibold leading-tight text-[#2C2C2C]">
             Code & création,
@@ -39,12 +38,8 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN */}
         <div className="relative flex items-center justify-center h-100 mt-12 lg:mt-0 w-1/2">
-          {/* Back Card */}
           <div className="profile-picture-container absolute size-70 rounded-[30px] rotate-[-15deg] border border-white/40 shadow-xl bg-white/30 backdrop-blur-xl" />
-
-          {/* Front Card */}
           <div className="absolute w-62.5 h-20 rounded-[20px] rotate-10 translate-x-10 translate-y-20 border border-white/40 shadow-xl bg-white/50 backdrop-blur-lg flex items-center px-8">
             <ul className="flex justify-between items-center w-full text-[#3a3a3a]">
               <li>

@@ -6,8 +6,7 @@ export default function Contact(){
         id="contact"
         className="flex justify-center items-center py-24 px-5"
       >
-        <div className="grid max-w-[1100px] w-full gap-20 grid-cols-1 lg:grid-cols-[1fr_1.2fr]">
-          {/* Contact Info */}
+        <div className="grid max-w-275 w-full gap-20 grid-cols-1 lg:grid-cols-[1fr_1.2fr]">
           <div className="flex flex-col gap-6 text-gray-800">
             <h2 className="text-4xl font-semibold">À votre écoute</h2>
             <p className="text-gray-600 leading-relaxed">

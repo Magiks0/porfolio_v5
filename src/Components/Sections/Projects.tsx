@@ -1,10 +1,32 @@
 import { Github } from "lucide-react";
+import { useEffect, useState } from "react";
+import supabase from "../../utils/supabase";
+import { useNavigate } from "react-router";
 
-export default function Projects({ projects }: { projects: Array<string[][][]> }) {
+export default function Projects() {
+  const [projects, setProjects] = useState([]);
+  const [errors, setErrors] = useState([]);
+  const navigate = useNavigate();
+
+  const fetchProjects = async () => {
+    const { data, error } = await supabase.from("projects").select();
+
+    if (error) {
+      setErrors(...errors, error);
+    }
+
+    setProjects(data);
+  };
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  console.log(errors);
+
   return (
     <section className="relative pb-10 px-5 bg-gray-50 overflow-hidden">
       <div className="max-w-300 mx-auto relative z-10">
-        {/* Section Header */}
         <div className="text-center animate-fadeInUp">
           <h2 className="text-[clamp(2.5rem,5vw,4rem)] font-bold mb-5 text-gray-800">
             Mes Projets
@@ -30,6 +52,7 @@ export default function Projects({ projects }: { projects: Array<string[][][]> }
           {projects.map((project, index) => (
             <div
               key={project.id}
+              onClick={() => navigate(`/${project.slug}`)}
               className="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden transform transition-all duration-400 hover:-translate-y-3 hover:shadow-2xl animate-slideInUp"
             >
               {/* Project Image */}
