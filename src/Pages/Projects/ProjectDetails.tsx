@@ -5,6 +5,7 @@ export default function ProjectDetails() {
 
     return (
         <>
+            <title>TEst</title>
             {params.slug}
         </>
     )

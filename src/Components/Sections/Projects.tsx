@@ -1,7 +1,7 @@
 import { Github } from "lucide-react";
 import { useEffect, useState } from "react";
-import supabase from "../../utils/supabase";
-import { useNavigate } from "react-router";
+import supabase from "../../lib/supabase";
+import { redirect, useNavigate } from "react-router";
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
@@ -52,36 +52,33 @@ export default function Projects() {
           {projects.map((project, index) => (
             <div
               key={project.id}
-              onClick={() => navigate(`/${project.slug}`)}
+              onClickCapture={() => navigate(`/${project.slug}`)}
               className="bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden transform transition-all duration-400 hover:-translate-y-3 hover:shadow-2xl animate-slideInUp"
             >
               {/* Project Image */}
               <div className="relative h-60 overflow-hidden">
                 <img
-                  src={project.imageUrl}
+                  src={project.imageurl}
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-400 hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-black/80 opacity-0 flex items-center justify-center gap-4 transition-opacity duration-300 hover:opacity-100">
                   {project.view_link && (
-                    <a
-                      href={project.view_link}
-                      target="_blank"
+                    <div
+                      onClickCapture={() => navigate(`/test`)}
                       rel="noopener noreferrer"
                       className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 text-white font-semibold text-sm hover:bg-gray-700 transform hover:-translate-y-1 transition-all duration-300"
                     >
                       Voir le projet
-                    </a>
+                    </div>
                   )}
                   {project.github_link && (
-                    <a
-                      href={project.github_link}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <div
+                      onClickCapture={() => navigate(`/test`)}
                       className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-200 text-gray-800 font-semibold text-sm hover:bg-gray-300 transform hover:-translate-y-1 transition-all duration-300"
                     >
                       <Github size={16} /> Code source
-                    </a>
+                    </div>
                   )}
                 </div>
               </div>
