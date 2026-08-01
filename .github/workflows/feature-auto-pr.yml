@@ -1,0 +1,45 @@
+name: Create PRs on push
+
+on:
+  push:
+    branches:
+      - "feat/**"
+      - "fix/**"
+      - "imp/**"
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Create the Pull Request if it doesn't exist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 1. Variables de base
+          COMMIT_MESSAGE=$(git log -1 --pretty=%s)
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+
+          PREFIX=${BRANCH_NAME%%/*}
+          TYPE=${PREFIX^}
+
+          PR_COUNT=$(gh pr list --head "$BRANCH_NAME" --state open --json url --jq 'length')
+          
+          if [ "$PR_COUNT" -eq "0" ]; then
+            echo "No existing PR found. Creating one for $TYPE..."
+
+            gh pr create \
+              --base main \
+              --head "$BRANCH_NAME" \
+              --title "[$TYPE]: $COMMIT_MESSAGE" \
+              --body "This Pull Request was automatically opened by GitHub Actions in response to a push to the \`$BRANCH_NAME\` branch." \
+              --draft
+          else
+            echo "A PR is already open for this branch. Doing nothing."
+          fi
