@@ -2,8 +2,7 @@ import { useState, type FormEvent } from "react";
 import { useAuth } from "./AuthContext";
 
 export default function LoginForm() {
-  const { signIn, signUp } = useAuth();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const { signIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -14,10 +13,7 @@ export default function LoginForm() {
     setError(null);
     setLoading(true);
 
-    const result =
-      mode === "signin"
-        ? await signIn(email, password)
-        : await signUp(email, password);
+    const result = await signIn(email, password)
 
     if (result) {
       setError(result);
@@ -26,7 +22,7 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#DBDBD5] px-5">
+    <div className="min-h-screen flex items-center justify-center bg-primary px-5">
       <div className="w-full max-w-md bg-white/70 backdrop-blur-md rounded-2xl shadow-lg p-10 flex flex-col gap-6">
         <div>
           <h1 className="text-3xl font-semibold text-gray-800">Administration</h1>
@@ -59,38 +55,22 @@ export default function LoginForm() {
             />
           </label>
 
-          {error && <p className="text-sm text-red-600">{error}</p>}
-
+                  {error && <p className="text-sm text-red-600">{error}</p>}
+                  
           <button
             type="submit"
             disabled={loading}
             className="mt-2 rounded-full bg-[#2C2C2C] text-white font-semibold py-3 transition-colors hover:bg-black disabled:opacity-50"
           >
+            {loading && (
+              <span className="animate-spin">🔄</span>
+            )}
             {loading
               ? "Chargement..."
-              : mode === "signin"
-                ? "Se connecter"
-                : "Créer un compte"}
+              : "Se connecter"
+             }
           </button>
         </form>
-
-        <p className="text-sm text-gray-600 text-center">
-          {mode === "signin" ? "Pas encore de compte ?" : "Déjà un compte ?"}{" "}
-          <button
-            type="button"
-            onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-            className="font-semibold text-gray-800 underline hover:text-black"
-          >
-            {mode === "signin" ? "Créer un compte" : "Se connecter"}
-          </button>
-        </p>
-
-        {mode === "signup" && (
-          <p className="text-xs text-gray-500 text-center">
-            Si la confirmation par email est activée, vérifiez votre boîte de
-            réception avant de vous connecter.
-          </p>
-        )}
       </div>
     </div>
   );
