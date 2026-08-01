@@ -29,7 +29,8 @@ export default function Hero() {
             </a>
 
             <a
-              href="/documents/cv_lucas_dupas.pdf"
+              href="https://epsnutoxnccwpmyjohms.supabase.co/storage/v1/object/public/uploads/documents/cv_lucas_dupas.pdf"
+              target="_blank"
               download
               className="px-7 py-3.5 rounded-full font-medium text-[#2C2C2C] shadow-[inset_0_0_0_1px_#ccc] transition-all duration-300 hover:bg-[#e9e9e9] hover:shadow-[inset_0_0_0_1px_#e9e9e9] hover:-translate-y-1 w-full lg:w-auto"
             >
@@ -39,7 +40,15 @@ export default function Hero() {
         </div>
 
         <div className="relative flex items-center justify-center h-100 mt-12 lg:mt-0 w-1/2">
-          <div className="profile-picture-container absolute size-70 rounded-[30px] rotate-[-15deg] border border-white/40 shadow-xl bg-white/30 backdrop-blur-xl" />
+          <div className="size-90 rounded-4xl -rotate-15 border-4 border-white/40 shadow-xl bg-white/30">
+            <div className="absolute bottom-0 w-full h-[200%] rounded-4xl overflow-hidden flex items-end">
+              <img
+                src="/assets/profile_picture.png"
+                alt="profil_picture"
+                className="h-1/2 object-cover scale-[1.4] rotate-15 brightness-125 contrast-110"
+              />
+            </div>
+          </div>
           <div className="absolute w-62.5 h-20 rounded-[20px] rotate-10 translate-x-10 translate-y-20 border border-white/40 shadow-xl bg-white/50 backdrop-blur-lg flex items-center px-8">
             <ul className="flex justify-between items-center w-full text-[#3a3a3a]">
               <li>
