@@ -1,13 +1,10 @@
-import { Github } from "lucide-react";
 import { useEffect, useState } from "react";
 import supabase from "../../../services/supabaseClient";
-import { useNavigate } from "react-router";
 import type { Project } from "./types";
 import ProjectCard from "./components/ProjectCard";
 
 export default function Projects() {
   const [projects, setProjects] = useState<Project[]>([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     let ignore = false;

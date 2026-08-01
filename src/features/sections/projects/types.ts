@@ -1,3 +1,10 @@
+export interface ProjectFile {
+  id: string;
+  size: number;
+  mime_type: string;
+  url: string;
+}
+
 export interface Project {
   id: string;
   slug: string;
@@ -7,4 +14,5 @@ export interface Project {
   github_link: string | null;
   preview_link: string | null;
   created_at: string;
+  files?: ProjectFile[];
 }
