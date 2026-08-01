@@ -22,7 +22,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # 1. Variables de base
           COMMIT_MESSAGE=$(git log -1 --pretty=%s)
           BRANCH_NAME=${GITHUB_REF#refs/heads/}
 
@@ -35,7 +34,7 @@ jobs:
             echo "No existing PR found. Creating one for $TYPE..."
 
             gh pr create \
-              --base main \
+              --base master \
               --head "$BRANCH_NAME" \
               --title "[$TYPE]: $COMMIT_MESSAGE" \
               --body "This Pull Request was automatically opened by GitHub Actions in response to a push to the \`$BRANCH_NAME\` branch." \
