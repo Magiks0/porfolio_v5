@@ -1,7 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { Pencil, Plus, Trash2, X } from "lucide-react";
 import supabase from "../../../services/supabaseClient";
-import type { Project } from "../../sections/projects/types";
+import type { Project, ProjectFile } from "../../sections/projects/types";
 import { uploadFile, getPublicUrl } from "../../../services/storage";
 
 
@@ -12,7 +12,7 @@ interface ProjectForm {
   category: string;
   github_link: string;
   preview_link: string;
-  files?: File[];
+  files?: (File | ProjectFile)[];
 }
 
 const EMPTY_FORM: ProjectForm = {
@@ -48,7 +48,7 @@ export default function ProjectsManager() {
     fetchProjects();
   }, []);
 
-  function setField<K extends keyof ProjectForm>(key: K, value: string) {
+  function setField<K extends keyof ProjectForm>(key: K, value: ProjectForm[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
@@ -67,7 +67,7 @@ export default function ProjectsManager() {
       category: project.category ?? "",
       github_link: project.github_link ?? "",
       preview_link: project.preview_link ?? "",
-      files: [...project.files],
+      files: [...(project.files ?? [])],
     });
     setShowForm(true);
   }
@@ -104,7 +104,8 @@ export default function ProjectsManager() {
       const savedProject = result.data;
 
     if (form.files) {
-      form.files.forEach(async (file) => { 
+      form.files.forEach(async (file) => {
+        if (!(file instanceof File)) return;
         const filePath = `projects/${Date.now()}/${crypto.randomUUID()}`;
         await uploadFile(file, filePath);
         const publicUrl = getPublicUrl(filePath);
@@ -257,14 +258,16 @@ export default function ProjectsManager() {
 
             {form.files && (
               <ul className="mt-2">
-                {form.files.map((file) => (
-                  <li key={file.id} className="flex justify-between">
-                    <img
-                      src={file.url}
-                      className="w-16 h-16 object-cover rounded"
-                    />
-                  </li>
-                ))}
+                {form.files.map((file) =>
+                  !(file instanceof File) ? (
+                    <li key={file.id} className="flex justify-between">
+                      <img
+                        src={file.url}
+                        className="w-16 h-16 object-cover rounded"
+                      />
+                    </li>
+                  ) : null
+                )}
               </ul>
             )}
           </div>

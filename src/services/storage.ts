@@ -1,6 +1,6 @@
 import supabase from "./supabaseClient";
 
-export const uploadFile = async (file, path) => {
+export const uploadFile = async (file: File, path: string) => {
   const { data, error } = await supabase.storage
     .from("uploads")
     .upload(path, file);
@@ -9,7 +9,7 @@ export const uploadFile = async (file, path) => {
   return data;
 };
 
-export const getPublicUrl = (path) => {
+export const getPublicUrl = (path: string) => {
   const { data } = supabase.storage.from("uploads").getPublicUrl(path);
 
   return data.publicUrl;
