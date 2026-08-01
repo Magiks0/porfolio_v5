@@ -6,8 +6,10 @@ interface Message {
   id: string;
   name: string;
   email: string;
+  subject: string;
   content: string;
   is_read: boolean;
+  created_at: string;
 }
 
 export default function MessagesManager() {
