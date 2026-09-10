@@ -2,25 +2,19 @@ import { ArrowUpRight, Code, Code2 } from "lucide-react";
 import type { Project } from "../types";
 
 export default function ProjectCard({ project }: { project: Project }) {
-  const badgeTechs = project.techs?.slice(0, 2) ?? [];
-  const hasImage = project.files?.length > 0;
+  const firstFile = project.files?.[0];
 
   return (
     <article className="group flex flex-col gap-6 rounded-3xl border border-black/5 bg-[#E7E2D9] px-7 py-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/5 dark:bg-dark-card">
       <div className="relative flex h-64 items-center justify-center rounded-2xl bg-surface dark:bg-dark-surface">
-        {hasImage && (
-          <>
-            <img
-              src={project.files[0].url}
-              alt="project_picture"
-              className="w-full h-full rounded-2xl opacity-50"
-            />
-          </>
-        )}
-        {!hasImage && (
-          <>
-            <Code size={40} className="text-ink-muted dark:text-dark-ink-muted" />
-          </>
+        {firstFile ? (
+          <img
+            src={firstFile.url}
+            alt="project_picture"
+            className="w-full h-full rounded-2xl opacity-50"
+          />
+        ) : (
+          <Code size={40} className="text-ink-muted dark:text-dark-ink-muted" />
         )}
       </div>
 
