@@ -1,14 +1,9 @@
 import { Outlet } from "react-router";
-import Header from "./Header";
 
 export default function Layout() {
   return (
-    <>
-      <Header />
-      <main>
-        <Outlet />
-      </main>
-      <footer></footer>
-    </>
+    <main className="min-h-screen w-full bg-primary dark:bg-dark-bg">
+      <Outlet />
+    </main>
   );
 }

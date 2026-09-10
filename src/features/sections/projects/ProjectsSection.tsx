@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import supabase from "../../../services/supabaseClient";
 import type { Project } from "./types";
 import ProjectCard from "./components/ProjectCard";
+import { FEATURED_PROJECTS } from "./featured-projects";
 
-export default function Projects() {
-  const [projects, setProjects] = useState<Project[]>([]);
+export default function ProjectsSection() {
+  const [projects, setProjects] = useState<Project[] | null>(null);
 
   useEffect(() => {
     let ignore = false;
@@ -16,6 +17,7 @@ export default function Projects() {
         if (ignore) return;
         if (error) {
           console.error(error);
+          setProjects([]);
           return;
         }
         setProjects(data ?? []);
@@ -26,32 +28,32 @@ export default function Projects() {
     };
   }, []);
 
+  const visibleProjects =
+    projects && projects.length > 0 ? projects : FEATURED_PROJECTS;
+
   return (
-    <section className="relative pb-10 px-5 bg-gray-50 overflow-hidden">
-      <div className="max-w-300 mx-auto relative z-10">
-        <div className="text-center animate-fadeInUp">
-          <h2 className="text-[clamp(2.5rem,5vw,4rem)] font-bold mb-5 text-gray-800">
-            Mes Projets
-          </h2>
-          <p className="text-lg text-gray-600 mb-6 max-w-150 mx-auto">
-            Découvrez mes dernières créations et expérimentations
+    <section
+      id="projets"
+      className="border-b border-black/5 px-6 py-14 sm:px-10 lg:px-14 dark:border-white/10"
+    >
+      <div className="mx-auto max-w-330">
+        <header className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted dark:text-dark-ink-muted">
+              Sélection
+            </p>
+            <h2 className="text-3xl font-bold text-ink dark:text-dark-ink">
+              Projets Sélectionnés
+            </h2>
+          </div>
+          <p className="max-w-sm text-sm leading-relaxed text-ink-muted sm:text-right dark:text-dark-ink-muted">
+            Conception d'architectures robustes, d'APIs sécurisées et
+            d'interfaces réactives centrées sur la performance.
           </p>
+        </header>
 
-          {/* <div className="flex flex-wrap justify-evenly gap-4 py-4 px-2">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  className="px-8 py-2 rounded-full bg-gray-800 text-white transition-transform duration-300 hover:scale-105"
-                >
-                  {cat}
-                </button>
-              ))}
-            </div> */}
-        </div>
-
-        {/* Projects Grid */}
-        <div className="grid gap-10 mt-16 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
+        <div className="flex flex-col gap-5">
+          {visibleProjects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
         </div>
