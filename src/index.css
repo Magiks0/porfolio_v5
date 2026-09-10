@@ -1,16 +1,54 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
     --color-primary: #DBDBD5;
     --color-secondary: #a1a19d;
+
+    /* Light mode palette */
+    --color-surface: #DBDBD5;
+    --color-ink: #2C2C2C;
+    --color-ink-soft: #3a3a3a;
+    --color-ink-muted: #5a5a5a;
+    --color-card: #ffffff;
+
+    /* Dark mode palette (overridden via .dark below) */
+    --color-dark-bg: #1B1B1F;
+    --color-dark-surface: #232329;
+    --color-dark-card: #2A2A31;
+    --color-dark-ink: #F5F5F3;
+    --color-dark-ink-soft: #C9C9C4;
+    --color-dark-ink-muted: #8E8E8A;
+    --color-dark-grid: #2A2A31;
+    --color-dark-dot: #3A3A42;
 }
 
 body {
-    font-family: "Lobster", sans-serif;
+    font-family: "Montserrat", sans-serif;
     background-color: #DBDBD5;
 }
 
-section {
-    background-color: #DBDBD5;
+html.dark body {
+    background-color: #1B1B1F;
+}
+
+/* Pinstripe grid with dots, adapts to theme */
+.bg-dot-grid {
+    background-color: #E9E9E4;
+    background-image:
+        radial-gradient(circle, rgba(255, 255, 255, 0.8) 1.5px, transparent 1.6px),
+        linear-gradient(rgba(44, 44, 44, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(44, 44, 44, 0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: center;
+}
+
+html.dark .bg-dot-grid {
+    background-color: #1B1B1F;
+    background-image:
+        radial-gradient(circle, rgba(255, 255, 255, 0.09) 1.5px, transparent 1.6px),
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 }

@@ -13,6 +13,7 @@ export interface Project {
   category: string | null;
   github_link: string | null;
   preview_link: string | null;
+  techs?: string[];
   created_at: string;
   files?: ProjectFile[];
 }
